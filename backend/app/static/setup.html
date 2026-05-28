@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Configurar entrevista | Simulador</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Oxanium:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/landing.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <main class="landing-shell mission-shell">
+      <section class="hero-card split mission-brief">
+        <div class="mission-config">
+          <div class="top-row">
+            <p class="badge">Briefing de simulacion</p>
+            <div class="setup-actions">
+              <a class="text-link" href="/dashboard">Historial</a>
+              <button id="logoutBtn" class="text-button" type="button">Cerrar sesion</button>
+            </div>
+          </div>
+          <h1>Selecciona tu entrevistador y configura la siguiente mision</h1>
+          <p class="lead">
+            Elige sector y personalidad. Entraras en una sala de entrevista con avatar,
+            transcripcion y evaluacion final.
+          </p>
+
+          <form id="startForm" class="setup-form">
+            <label class="sr-only">
+              Tipo de entrevista
+              <select id="jobSelect" required></select>
+            </label>
+
+            <label class="sr-only">
+              Personalidad del entrevistador
+              <select id="personalitySelect" required></select>
+            </label>
+
+            <section class="mission-section">
+              <div class="mission-headline">
+                <span>01</span>
+                <strong>Selecciona escenario</strong>
+              </div>
+              <div id="missionGrid" class="mission-grid"></div>
+            </section>
+
+            <section class="mission-section">
+              <div class="mission-headline">
+                <span>02</span>
+                <strong>Selecciona personalidad NPC</strong>
+              </div>
+              <div id="personalityGrid" class="personality-grid"></div>
+            </section>
+
+            <button id="startBtn" class="mission-launch" type="submit">Comenzar entrevista</button>
+          </form>
+        </div>
+
+        <aside class="preview-card mission-preview" aria-hidden="true">
+          <div class="preview-terminal">
+            <p class="badge">NPC activo</p>
+            <div class="preview-head"></div>
+            <div class="preview-body"></div>
+            <strong>Carolina</strong>
+            <span>Entrevistadora IA</span>
+            <small id="previewText">Lista para cargar escenario.</small>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="/static/setup.js" defer></script>
+  </body>
+</html>

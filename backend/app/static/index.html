@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Acceso | Simulador de Entrevistas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Oxanium:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/landing.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <main class="landing-shell landing-cover">
+      <section class="hero-card auth-card cover-card">
+        <div class="auth-copy cover-copy">
+          <p class="badge">CareerSim // Serious Game</p>
+          <h1>NPC Interview Simulator</h1>
+          <p class="lead">
+            Entrena entrevistas laborales en una sala inmersiva con Carolina, un NPC conversacional
+            por voz. Completa misiones, gana XP y recibe un informe final con IA.
+          </p>
+          <div class="cover-actions">
+            <button id="startSimulationBtn" class="primary-link as-button" type="button">
+              Iniciar simulacion
+            </button>
+            <button id="progressBtn" class="text-button" type="button">Ver progreso</button>
+          </div>
+          <div class="cover-scene" aria-hidden="true">
+            <div class="scene-window">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="scene-desk"></div>
+            <img class="scene-avatar" src="/static/assets/carolina.jpg" alt="" />
+            <div class="mission-hud">
+              <strong>Puleva Granada</strong>
+              <small>Entrevista activa · NPC Carolina</small>
+            </div>
+          </div>
+          <div class="feature-grid" aria-label="Caracteristicas del simulador">
+            <article>
+              <span>01</span>
+              <strong>Voz realtime</strong>
+              <small>ElevenLabs Conversational AI mantiene la entrevista.</small>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>Informe IA</strong>
+              <small>OpenAI evalua claridad, coherencia y adecuacion.</small>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>Progreso RPG</strong>
+              <small>XP, niveles, rangos, logros y ranking local.</small>
+            </article>
+          </div>
+        </div>
+
+        <section id="authPanel" class="auth-panel" aria-label="Acceso de usuario">
+          <p class="panel-kicker">Acceso de candidato</p>
+          <div class="auth-tabs">
+            <button id="registerTab" class="tab active" type="button">Registrarme</button>
+            <button id="loginTab" class="tab" type="button">Iniciar sesion</button>
+          </div>
+
+          <form id="registerForm" class="setup-form auth-form">
+            <label>
+              Nombre
+              <input id="registerName" type="text" minlength="2" maxlength="120" required />
+            </label>
+
+            <label>
+              Email
+              <input id="registerEmail" type="email" maxlength="255" required />
+            </label>
+
+            <label>
+              Contraseña
+              <input id="registerPassword" type="password" minlength="8" maxlength="128" required />
+            </label>
+
+            <button type="submit">Crear cuenta</button>
+          </form>
+
+          <form id="loginForm" class="setup-form auth-form hidden">
+            <label>
+              Email
+              <input id="loginEmail" type="email" maxlength="255" required />
+            </label>
+
+            <label>
+              Contraseña
+              <input id="loginPassword" type="password" maxlength="128" required />
+            </label>
+
+            <button type="submit">Entrar</button>
+          </form>
+
+          <p id="authMessage" class="form-message" role="status"></p>
+        </section>
+      </section>
+    </main>
+
+    <script src="/static/landing.js" defer></script>
+  </body>
+</html>

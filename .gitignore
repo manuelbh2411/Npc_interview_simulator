@@ -1,0 +1,15 @@
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+.env
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+.agents/
+.codex/
+skills-lock.json
+backend/app/static/audio/*.mp3
+backend/app/data/*.db
+backend/app/data/*.sqlite

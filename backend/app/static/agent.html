@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Entrevista Realtime | Carolina</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Oxanium:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/interview.css" />
+  </head>
+  <body>
+    <main class="call-shell">
+      <section class="video-stage" aria-label="Videollamada con Carolina">
+        <header class="call-topbar">
+          <div>
+            <p class="meta">Sala de reunion virtual // simulador serio</p>
+            <h1 id="sessionTitle">Entrevista en curso</h1>
+          </div>
+          <a class="back-link" href="/setup">Cambiar configuracion</a>
+        </header>
+
+        <section class="match-hud" aria-label="Estado de entrevista">
+          <div><span>NPC</span><strong id="npcState">Preparada</strong></div>
+          <div><span>Conexion</span><strong id="connectionState">Offline</strong></div>
+          <div><span>Duracion</span><strong id="durationTimer">00:00</strong></div>
+          <div><span>Rendimiento</span><strong id="performanceMeter">--</strong></div>
+        </section>
+
+        <div class="video-frame">
+          <div class="office-depth" aria-hidden="true">
+            <span class="sun-glow"></span>
+            <span class="office-window">
+              <i></i>
+              <i></i>
+            </span>
+            <span class="bookshelf">
+              <i></i>
+              <i></i>
+              <i></i>
+            </span>
+            <span class="desk-lamp lamp-left"></span>
+            <span class="desk-lamp lamp-right"></span>
+            <span class="laptop"></span>
+            <span class="desk-line"></span>
+          </div>
+
+          <div class="live-badge">
+            <span></span>
+            Carolina
+          </div>
+
+          <div class="avatar-wrap">
+            <div id="avatar" class="avatar-silhouette" aria-label="Avatar humano de Carolina">
+              <img src="/static/assets/carolina.jpg" alt="Carolina, entrevistadora virtual" />
+              <div id="avatarMouth" class="mouth" data-viseme="rest"></div>
+            </div>
+            <p id="voiceStatus" class="voice-status">Carolina lista para conversar</p>
+          </div>
+
+          <div class="candidate-tile">
+            <div class="candidate-avatar">
+              <span></span>
+            </div>
+            <div>
+              <strong>Candidato</strong>
+              <small id="micIndicator">Micro en espera</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-panel" aria-label="Chat y controles de entrevista">
+        <section class="control-card">
+          <button id="startBtn" class="btn-primary" type="button">Iniciar entrevista</button>
+          <button id="endInterviewBtn" class="btn-ghost" type="button">Detener entrevista</button>
+          <button id="reportBtn" class="btn-ghost" type="button">Generar informe</button>
+          <button id="formatBtn" class="btn-ghost" type="button">Cambiar a texto</button>
+        </section>
+
+        <section class="chat-card">
+          <div class="chat-head">
+            <p class="meta">Transcripcion</p>
+            <span>En directo</span>
+          </div>
+          <div id="messages" class="messages" aria-live="polite"></div>
+          <form id="chatForm" class="chat-form">
+            <input
+              id="messageInput"
+              type="text"
+              maxlength="2000"
+              placeholder="También puedes escribir tu respuesta..."
+              autocomplete="off"
+            />
+            <button id="sendBtn" class="btn-primary" type="submit">Enviar</button>
+          </form>
+        </section>
+
+        <article id="reportPanel" class="report-panel hidden" aria-live="polite">
+          <p class="meta">Pantalla de resultados</p>
+          <h2>Informe de entrevista</h2>
+          <p id="finalScore" class="report-score"></p>
+          <p id="resultRank" class="result-rank"></p>
+          <p id="xpReward" class="xp-reward"></p>
+          <p id="reportSummary" class="report-summary"></p>
+          <p id="reportRecommendation" class="report-summary"></p>
+          <div id="skillBars" class="skill-bars"></div>
+          <ul id="scoreList" class="score-list"></ul>
+          <div class="result-actions">
+            <a class="btn-ghost result-link" href="/setup">Repetir entrevista</a>
+            <a class="btn-primary result-link" href="/dashboard">Volver al dashboard</a>
+          </div>
+        </article>
+      </aside>
+    </main>
+
+    <script type="module" src="/static/agent.js"></script>
+  </body>
+</html>

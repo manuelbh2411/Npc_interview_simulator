@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panel personal | Simulador de Entrevistas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Oxanium:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/landing.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+
+    <main class="dashboard-shell game-menu">
+      <header class="dashboard-header">
+        <div>
+          <p class="badge">Menu principal // Carrera</p>
+          <h1>Historial de entrevistas</h1>
+          <p id="welcomeText" class="lead">Revisa entrevistas, informes y rendimiento acumulado.</p>
+        </div>
+        <div class="dashboard-actions">
+          <a class="primary-link" href="/setup">Nueva entrevista</a>
+          <button id="logoutBtn" class="text-button" type="button">Cerrar sesion</button>
+        </div>
+      </header>
+
+      <section class="player-command">
+        <article class="player-card">
+          <div class="player-avatar" aria-hidden="true"><span></span></div>
+          <div>
+            <p class="badge">Perfil del jugador</p>
+            <h2 id="playerName">Candidato</h2>
+            <p id="playerRank" class="lead">Aspirante</p>
+          </div>
+          <div class="level-chip">
+            <small>Nivel</small>
+            <strong id="playerLevel">1</strong>
+          </div>
+        </article>
+
+        <article class="xp-card">
+          <div class="card-title">
+            <p class="badge">Progreso</p>
+            <strong>Experiencia</strong>
+          </div>
+          <div class="xp-top">
+            <span id="totalXp">0 XP</span>
+            <span id="xpToNext">0 / 350</span>
+          </div>
+          <div class="xp-track"><span id="xpFill"></span></div>
+        </article>
+
+        <article class="stats-strip">
+          <div class="card-title stats-title">
+            <p class="badge">Estadisticas</p>
+            <strong>Rendimiento</strong>
+          </div>
+          <span><b id="completedCount">0</b> completadas</span>
+          <span><b id="averageScore">--</b> media</span>
+          <span><b id="bestScore">--</b> mejor</span>
+        </article>
+
+        <article class="avatar-unlock-card">
+          <div class="history-head compact-head">
+            <strong>Iconos de perfil</strong>
+          </div>
+          <div id="avatarUnlockList" class="avatar-unlocks"></div>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <section class="history-card">
+          <div class="history-head">
+            <strong>Misiones recientes</strong>
+            <span id="historyCount">0</span>
+          </div>
+          <div id="historyList" class="history-list" aria-live="polite"></div>
+        </section>
+
+        <aside class="report-view">
+          <p class="badge">Resultados / Informe</p>
+          <h2 id="reportTitle">Selecciona una entrevista</h2>
+          <p id="reportMeta" class="lead">Aqui apareceran la duracion, puntuacion y feedback.</p>
+          <div id="reportContent" class="report-content empty-state">
+            Todavia no has seleccionado ninguna entrevista.
+          </div>
+        </aside>
+      </section>
+
+      <section class="meta-grid">
+        <article class="achievement-card">
+          <div class="history-head compact-head">
+            <strong>Insignias desbloqueadas</strong>
+          </div>
+          <div id="achievementList" class="achievement-list"></div>
+        </article>
+        <article class="leaderboard-card">
+          <div class="history-head compact-head">
+            <strong>Ranking local</strong>
+          </div>
+          <div id="leaderboardList" class="leaderboard-list"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="/static/dashboard.js" defer></script>
+  </body>
+</html>
