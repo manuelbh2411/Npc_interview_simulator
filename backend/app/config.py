@@ -13,6 +13,16 @@ VERCEL_DATA_DIR = Path("/tmp/tfg_interview_data")
 load_dotenv(dotenv_path=ENV_FILE)
 
 
+def normalize_database_url(raw_url: str) -> str:
+    """Adapta URLs de Postgres de Neon/Vercel al driver instalado."""
+
+    if raw_url.startswith("postgres://"):
+        return raw_url.replace("postgres://", "postgresql+psycopg://", 1)
+    if raw_url.startswith("postgresql://"):
+        return raw_url.replace("postgresql://", "postgresql+psycopg://", 1)
+    return raw_url
+
+
 class Settings:
     """Configuracion centralizada del backend.
 
@@ -54,7 +64,9 @@ class Settings:
         self.data_dir = Path(os.getenv("DATA_DIR", str(default_data_dir)))
         self.static_dir = BASE_DIR / "static"
         self.database_path = self.data_dir / "tfg_interviews.db"
-        self.database_url = os.getenv("DATABASE_URL", f"sqlite:///{self.database_path}")
+        self.database_url = normalize_database_url(
+            os.getenv("DATABASE_URL", f"sqlite:///{self.database_path}")
+        )
         self.jwt_secret_key = os.getenv("JWT_SECRET_KEY", "cambia-esta-clave-en-produccion")
         self.jwt_algorithm = os.getenv("JWT_ALGORITHM", "HS256")
         self.access_token_expire_minutes = int(

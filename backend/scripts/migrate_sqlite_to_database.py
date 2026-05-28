@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session, sessionmaker
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND_DIR))
 
+from app.config import normalize_database_url  # noqa: E402
 from app.database import Base  # noqa: E402
 from app.models.interview import Interview  # noqa: E402
 from app.models.report import Report  # noqa: E402
@@ -22,7 +23,7 @@ DEFAULT_SQLITE_PATH = BACKEND_DIR / "app" / "data" / "tfg_interviews.db"
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Migra datos desde SQLite local a la DATABASE_URL persistente.",
+        description="Migra datos desde SQLite local a una base Neon/PostgreSQL.",
     )
     parser.add_argument(
         "--source",
@@ -32,7 +33,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--target",
         required=True,
-        help="URL SQLAlchemy de destino. Ejemplo: postgresql+psycopg://user:pass@host/db",
+        help="URL de Neon/PostgreSQL. Acepta postgres://, postgresql:// o postgresql+psycopg://.",
     )
     parser.add_argument(
         "--clear-target",
@@ -103,15 +104,14 @@ def sync_postgres_sequences(db: Session) -> None:
     for table_name in ("users", "interviews", "reports"):
         db.execute(
             text(
-                """
+                f"""
                 SELECT setval(
-                    pg_get_serial_sequence(:table_name, 'id'),
-                    COALESCE((SELECT MAX(id) FROM """ + table_name + """), 1),
+                    pg_get_serial_sequence('{table_name}', 'id'),
+                    COALESCE((SELECT MAX(id) FROM {table_name}), 1),
                     true
                 )
                 """
-            ),
-            {"table_name": table_name},
+            )
         )
     db.commit()
 
@@ -121,7 +121,7 @@ def migrate(source_path: Path, target_url: str, clear_target: bool) -> None:
         raise SystemExit(f"No existe la base SQLite local: {source_path}")
 
     source_engine = create_engine(f"sqlite:///{source_path}")
-    target_engine = create_engine(target_url, pool_pre_ping=True)
+    target_engine = create_engine(normalize_database_url(target_url), pool_pre_ping=True)
     SourceSession = sessionmaker(bind=source_engine)
     TargetSession = sessionmaker(bind=target_engine)
 
