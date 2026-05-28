@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent
 BACKEND_DIR = BASE_DIR.parent
 ENV_FILE = BACKEND_DIR / ".env"
+VERCEL_DATA_DIR = Path("/tmp/tfg_interview_data")
 
 load_dotenv(dotenv_path=ENV_FILE)
 
@@ -49,7 +50,8 @@ class Settings:
         self.openai_api_key = os.getenv("OPENAI_API_KEY")
         self.openai_evaluation_model = os.getenv("OPENAI_EVALUATION_MODEL", "gpt-4.1-mini")
 
-        self.data_dir = BASE_DIR / "data"
+        default_data_dir = VERCEL_DATA_DIR if os.getenv("VERCEL") else BASE_DIR / "data"
+        self.data_dir = Path(os.getenv("DATA_DIR", str(default_data_dir)))
         self.static_dir = BASE_DIR / "static"
         self.database_path = self.data_dir / "tfg_interviews.db"
         self.database_url = os.getenv("DATABASE_URL", f"sqlite:///{self.database_path}")
