@@ -45,6 +45,9 @@ let visemeTimer = null;
 let connectionTimeout = null;
 let durationInterval = null;
 let startedAt = null;
+let targetDurationNoticeSent = false;
+const targetDurationSeconds = 210;
+const targetDurationLabel = "03:30";
 
 function getAuthToken() {
   return localStorage.getItem("authToken");
@@ -97,12 +100,18 @@ function setConnectionState(label) {
 
 function startTimer() {
   startedAt = Date.now();
+  targetDurationNoticeSent = false;
   stopTimer();
   durationInterval = window.setInterval(() => {
     const elapsed = Math.floor((Date.now() - startedAt) / 1000);
     const minutes = String(Math.floor(elapsed / 60)).padStart(2, "0");
     const seconds = String(elapsed % 60).padStart(2, "0");
-    durationTimer.textContent = `${minutes}:${seconds}`;
+    durationTimer.textContent = `${minutes}:${seconds} / ${targetDurationLabel}`;
+    if (elapsed >= targetDurationSeconds && !targetDurationNoticeSent) {
+      targetDurationNoticeSent = true;
+      performanceMeter.textContent = "Cierre";
+      setVoiceStatus("Tiempo objetivo alcanzado. Puedes cerrar con Carolina y generar el informe.");
+    }
   }, 1000);
 }
 

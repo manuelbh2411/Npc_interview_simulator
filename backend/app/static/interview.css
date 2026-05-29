@@ -18,6 +18,25 @@
   --hair: #7a4129;
   --hair-dark: #3a2119;
   --suit: #30363c;
+  --button-border: #020609;
+  --button-shadow: 5px 5px 0 rgba(2, 6, 9, 0.92);
+  --button-shift-x: 5px;
+  --button-shift-y: 5px;
+  --button-radius: 8px;
+  --enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --gradient-angle: 0deg;
+}
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotateBorder {
+  to {
+    --gradient-angle: 360deg;
+  }
 }
 
 * {
@@ -53,8 +72,17 @@ body::before {
   mask-image: linear-gradient(180deg, #000, transparent 90%);
 }
 
+.cursor-trail-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
 .call-shell {
   position: relative;
+  z-index: 3;
   width: min(1520px, calc(100vw - 28px));
   height: calc(100vh - 28px);
   margin: 14px auto;
@@ -821,32 +849,54 @@ h1 {
 .btn-primary,
 .btn-ghost {
   min-height: 44px;
-  border: 1px solid transparent;
-  border-radius: 8px;
+  border: 2px solid var(--button-border);
+  border-radius: var(--button-radius);
   padding: 10px 12px;
   font: inherit;
   font-family: "Oxanium", sans-serif;
   font-weight: 800;
   letter-spacing: 0;
   cursor: pointer;
+  box-shadow: var(--button-shadow);
+  transition: transform 150ms var(--enter), box-shadow 150ms var(--enter), background-color 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
 .btn-primary {
   color: #061113;
   background: linear-gradient(180deg, #8cf4e8, var(--teal));
-  box-shadow: 0 10px 24px rgba(57, 213, 201, 0.22);
 }
 
 .btn-ghost {
   color: var(--ink);
-  border-color: var(--line);
   background: rgba(255,255,255,0.06);
+}
+
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible {
+  outline: none;
+  box-shadow: var(--button-shadow), 0 0 0 3px rgba(57, 213, 201, 0.24);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:not(:disabled):hover,
+  .btn-ghost:not(:disabled):hover {
+    transform: translate(var(--button-shift-x), var(--button-shift-y));
+    box-shadow: none;
+  }
+}
+
+.btn-primary:active,
+.btn-ghost:active {
+  transform: translate(var(--button-shift-x), var(--button-shift-y));
+  box-shadow: none;
 }
 
 .btn-primary:disabled,
 .btn-ghost:disabled {
   cursor: not-allowed;
   opacity: 0.55;
+  transform: none;
+  box-shadow: var(--button-shadow);
 }
 
 .chat-card {
@@ -1025,7 +1075,7 @@ input:focus {
   display: grid;
   place-items: center;
   min-height: 44px;
-  border-radius: 8px;
+  border-radius: var(--button-radius);
   text-decoration: none;
 }
 

@@ -12,6 +12,7 @@ const personalityGrid = document.getElementById("personalityGrid");
 const previewText = document.getElementById("previewText");
 let selectedJob = "Ingeniería";
 let selectedPersonality = "Amable";
+const interviewDurationLabel = "3 min 30 s";
 
 const missionData = {
   Ingeniería: {
@@ -90,6 +91,7 @@ function renderMissionCards(jobs) {
       <strong>${mission.title}</strong>
       <small>${job}</small>
       <em>Dificultad ${mission.difficulty}</em>
+      <em>Duracion aprox. ${interviewDurationLabel}</em>
       <p>${mission.skills}</p>
     `;
     card.addEventListener("click", () => selectMission(job));
@@ -109,6 +111,7 @@ function renderPersonalityCards(personalities) {
     card.innerHTML = `
       <strong>${personality}</strong>
       <small>${data.description}</small>
+      <small>Formato breve: ${interviewDurationLabel}</small>
       <em>Recompensa +${data.xp} XP</em>
     `;
     card.addEventListener("click", () => selectPersonality(personality));
@@ -138,7 +141,7 @@ function selectPersonality(personality) {
 function updatePreview() {
   const mission = missionData[selectedJob] || missionData.Ingeniería;
   const personality = personalityData[selectedPersonality] || { xp: 75 };
-  previewText.textContent = `${mission.title}: ${mission.skills}. Carolina ${selectedPersonality} · +${personality.xp} XP base.`;
+  previewText.textContent = `${mission.title}: ${mission.skills}. Carolina ${selectedPersonality} · ${interviewDurationLabel} aprox. · +${personality.xp} XP base.`;
 }
 
 startForm.addEventListener("submit", (event) => {

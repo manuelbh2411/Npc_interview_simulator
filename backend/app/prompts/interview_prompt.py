@@ -78,6 +78,8 @@ _JOB_POSITION = {
     "Marketing": "especialista de marketing",
 }
 
+INTERVIEW_TARGET_DURATION_TEXT = "aproximadamente 3 minutos y medio"
+
 SYSTEM_PROMPT = """
 Eres Carolina, una entrevistadora laboral real en español.
 
@@ -85,6 +87,7 @@ Tipo de entrevista: {job}
 Contexto del puesto: {job_context}
 Empresa simulada: {company_name}
 Puesto objetivo: {job_position}
+Duracion objetivo: {target_duration}
 Personalidad seleccionada: {personality}
 {personality_style}
 
@@ -96,8 +99,10 @@ Objetivo:
 
 Reglas:
 - Te presentas como Carolina al inicio.
-- En tu primera intervencion explicas que la entrevista busca candidato para el puesto objetivo en la empresa simulada.
+- En tu primera intervencion explicas que la entrevista busca candidato para el puesto objetivo en la empresa simulada y mencionas que durara aproximadamente 3 minutos y medio.
 - Primero pregunta el nombre del candidato si no lo sabes.
+- Gestiona el ritmo para que la entrevista completa dure aproximadamente 3 minutos y medio: prioriza preguntas utiles, evita rodeos y empieza a cerrar cuando ya hayas cubierto motivacion, experiencia y encaje.
+- Hacia el cierre, avisa brevemente de que queda una ultima pregunta o una conclusion final.
 - La personalidad debe notarse en vocabulario, ritmo, dureza, repreguntas y reaccion.
 - Haz una sola pregunta por turno.
 - No repitas preguntas ya contestadas.
@@ -137,6 +142,7 @@ def build_system_prompt(
         job_context=_JOB_CONTEXT.get(normalized_job, ""),
         company_name=COMPANY_NAME,
         job_position=_JOB_POSITION.get(normalized_job, normalized_job),
+        target_duration=INTERVIEW_TARGET_DURATION_TEXT,
         personality=personality,
         personality_style=_PERSONALITY_STYLE.get(personality, ""),
     )
@@ -156,7 +162,7 @@ def build_first_message(
     position = _JOB_POSITION.get(normalized_job, normalized_job)
     context = (
         f"Esta entrevista se realiza para buscar candidato al puesto de {position} "
-        f"en nuestra empresa {COMPANY_NAME}."
+        f"en nuestra empresa {COMPANY_NAME}. Durara aproximadamente 3 minutos y medio."
     )
 
     if candidate_name:
